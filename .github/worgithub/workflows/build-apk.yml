@@ -49,6 +49,15 @@ jobs:
 
           mkdir -p app/src/main/java/com/rq/generalservices
           mkdir -p app/src/main/res/values
+          mkdir -p app/src/main/res/drawable-nodpi
+
+          if [ ! -s app/src/main/assets/site/logo.png ]; then
+            echo "ERROR: logo.png is missing from website ZIP"
+            exit 1
+          fi
+
+          cp app/src/main/assets/site/logo.png \
+            app/src/main/res/drawable-nodpi/ic_launcher.png
 
           cat > settings.gradle <<'EOF'
           pluginManagement {
@@ -106,6 +115,8 @@ jobs:
               <application
                   android:theme="@style/AppTheme"
                   android:label="@string/app_name"
+                  android:icon="@drawable/ic_launcher"
+                  android:roundIcon="@drawable/ic_launcher"
                   android:usesCleartextTraffic="false"
                   android:allowBackup="true"
                   android:supportsRtl="true">
